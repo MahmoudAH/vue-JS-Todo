@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link href="https://unpkg.com/todomvc-app-css@2.1.0/index.css" rel="stylesheet"/>
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+</head>
+<body>
+<section class="todoapp">
+  <header class="header">
+    <h1>my Todos</h1>
+    <input class="new-todo "
+      autocomplete="off"
+      placeholder="What needs to be done?" @keyUp.enter="addTodo()" v-model="newTodo">
+  </header>
+      <span v-text="newTodo"></span>
+
+  <section class="main" >
+    <input class="toggle-all" id="toggle-all" type="checkbox" v-model="markTodos">
+    <label for="toggle-all">Mark all as complete</label>
+    
+    <ul class="todo-list ">
+      <li class="todo" v-for="todo in filteredTodos" :class="{completed:todo.completed,
+      editing:todo==editingTodo}">
+        <div class="view">
+          <input class="toggle" type="checkbox"  v-model="todo.completed">
+          <label @dblclick="editTodo(todo)" v-model="oldValue">{{todo.title}}</label>
+          <button class="destroy" @click="deleteTodo('todo')"></button>
+        </div>
+        <input class="edit" type="text" v-model='todo.title' 
+        @keyUp.enter='finishEditing'
+        @keyUp.esc='cancelEditing'
+        >
+      </li>
+    </ul>
+  </section>
+  <footer class="footer">
+    <span class="todo-count">
+      <strong>{{remainingItems}}</strong> {{remainingText}} left
+    </span>
+    <ul class="filters">
+      <li><a href="#" @click.prevent="visability='all'" :class="{selected:visability=='all'}">All</a></li>
+      <li><a href="#" @click.prevent="visability='active'" :class="{selected:visability=='active'}">Active</a></li>
+      <li><a href="#" @click.prevent="visability='completed'" :class="{selected:visability=='completed'}">Completed</a></li>
+    </ul>
+    <button class="clear-completed" @click.prevent="clearCompleted">
+      Clear completed
+    </button>
+  </footer>
+</section>
+<footer class="info">
+  <p>Double-click to edit a todo</p>
+</footer>
+<script  src=" https://unpkg.com/vue@2.4.4/dist/vue.js"></script>
+<script src="myTodo.js"></script>
+</body>
+</html>
+
